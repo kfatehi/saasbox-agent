@@ -14,6 +14,7 @@
   "license": "",
   "private": true,
   "dependencies": {
+    "http-proxy": "^1.3.0",
     "ydm-api": "^1.1.5"
   }
 }
