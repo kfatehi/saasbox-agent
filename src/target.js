@@ -1,4 +1,4 @@
-var client = require('../../redis')
+var client = require('./redis')
   , logger = require('winston')
   , cache = {}
 
