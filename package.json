@@ -2,7 +2,7 @@
   "name": "saasbox-agent",
   "version": "0.0.0",
   "description": "Extends the ydm api to include reverse proxying",
-  "main": "index.js",
+  "main": "src/server/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,7 +14,12 @@
   "license": "",
   "private": true,
   "dependencies": {
+    "body-parser": "^1.6.7",
+    "express": "^4.8.7",
+    "hiredis": "^0.1.17",
     "http-proxy": "^1.3.0",
+    "redis": "^0.12.1",
+    "winston": "^0.7.3",
     "ydm-api": "^1.1.5"
   }
 }
