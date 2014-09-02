@@ -12,15 +12,16 @@ module.exports = function (r) { r.route('/proxies/:fqdn')
   .post(bodyParser.json(), function (req, res) {
     target.set(req.params.fqdn, req.body.target, function (err) {
       if (err) res.status(500).end();
-      else res.status(200).end();
+      else res.status(201).end();
     })
   })
+
   /* DELETE /proxies/:fqdn
    * Delete a proxy pair by fqdn key */
   .delete(function (req, res) {
-    target.set(req.params.fqdn, null, function (err) {
+    target.unset(req.params.fqdn, function (err) {
       if (err) res.status(500).end();
-      else res.status(200).end();
+      else res.status(204).end();
     })
   })
 }

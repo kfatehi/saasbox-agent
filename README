@@ -5,3 +5,5 @@ the control api exposes a ydm-api endpoint and extends it with a proxy managemen
 by default the proxy server listens on port 4000 and the control api listens on port 4001
 
 Make sure to set YDM_API_SECRET in the environment.
+
+In addition, we store the key/value pairs on disk. Pass in STORAGE_PATH env var.

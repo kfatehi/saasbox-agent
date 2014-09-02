@@ -9,5 +9,5 @@ var logger = require('winston')
 app.proxy.listen(proxyPort, addr)
 logger.info("proxy listening on http://"+addr+":"+proxyPort);
 
-app.api.listen(apiPort, addr)
+app.api.http.listen(apiPort, addr)
 logger.info("api listening on http://"+addr+":"+apiPort);

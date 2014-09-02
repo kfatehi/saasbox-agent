@@ -10,6 +10,12 @@ logger.add(logger.transports.Console, { colorize: true });
 api.app.use('/api/v1/', require('./routes'));
 
 module.exports = {
-  api: api.http,
-  proxy: require('http').createServer(proxyServer)
+  api: {
+    app: api.app,
+    http: api.http
+  },
+  proxy: {
+    app: proxyServer,
+    http: require('http').createServer(proxyServer) 
+  }
 }

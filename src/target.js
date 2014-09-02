@@ -1,39 +1,34 @@
-var client = require('./redis')
-  , logger = require('winston')
+var logger = require('winston')
+  , storage = require('./storage')
   , cache = {}
 
 module.exports = {
   /* Get proxy target */
   get: function (fqdn, cb) {
-    if (cache[fqdn]) cb(null, cache[fqdn]);
-    else {
-      client.get('proxy:'+fqdn, function (err, reply) {
-        if (err) {
-          logger.error('Redis returned an error looking for '+fqdn);
-          logger.error(err.stack);
-          cb(err);
-        } else if (reply === null) {
-          cb(null, null)
-        } else {
-          logger.info('got proxy:'+host+' => '+target)
-          cache[fqdn] = reply;
-          cb(null, reply)
-        }
-      })
+    if (cache[fqdn]) {
+      cb(null, cache[fqdn]);
+    } else {
+      var reply = storage.getItem(fqdn);
+      cache[fqdn] = reply;
+      cb(null, reply)
     }
   },
 
   /* Set a proxy target */
   set: function (fqdn, target, cb) {
-    client.set('proxy:'+fqdn, target, function (err, reply) {
-      if (err) {
-        logger.error(err.stack)
-        cb(err)
-      } else {
-        cache[fqdn] = target;
-        logger.info('set proxy:'+host+' => '+target)
-        cb(null, target);
-      }
-    })
+    storage.setItem(fqdn, target)
+    cache[fqdn] = target;
+    cb(null, target);
+  },
+
+  unset: function(fqdn, cb) {
+    storage.removeItem(fqdn)
+    delete cache[fqdn]
+    cb(null)
+  },
+
+  clearAll: function() {
+    storage.clear()
+    cache = {}
   }
 }

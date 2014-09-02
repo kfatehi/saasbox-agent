@@ -4,7 +4,8 @@
   "description": "Extends the ydm api to include reverse proxying",
   "main": "src/server/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --recursive test",
+    "tdd": "watchy -w . -i '/\\.|node_modules|\\.json|coverage$' -- mocha -R min --recursive test 2>&1 | simple-stacktrace"
   },
   "repository": {
     "type": "git",
@@ -15,12 +16,15 @@
   "private": true,
   "dependencies": {
     "body-parser": "^1.6.7",
-    "chai": "^1.9.1",
     "express": "^4.8.7",
     "http-proxy": "^1.3.0",
-    "mocha": "^1.21.4",
-    "supertest": "^0.13.0",
+    "node-localstorage": "^0.3.4",
     "winston": "^0.7.3",
-    "ydm-api": "^1.1.5"
+    "ydm-api": "^1.1.6"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "mocha": "^1.21.4",
+    "supertest": "^0.13.0"
   }
 }
