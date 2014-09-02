@@ -29,13 +29,9 @@ logger.info("control api listening on http://"+addr+":"+ports.api.http);
 app.proxy.http.listen(ports.proxy.http, addr)
 logger.info("proxy listening on http://"+addr+":"+ports.proxy.http);
 
-if (process.env.SSL_KEY && process.env.SSL_CERT) {
-  var read = require('fs').readFileSync;
-  require('https').createServer({
-    key: read(process.env.SSL_KEY),
-    cert: read(process.env.SSL_CERT)
-  }, app.proxy.app)
-  logger.info('HTTPS server enabled')
+if (app.proxy.https) {
+  app.proxy.https.listen(ports.proxy.https, addr)
+  logger.info("proxy listening on http://"+addr+":"+ports.proxy.https);
 } else {
   logger.warn('no SSL')
 }
