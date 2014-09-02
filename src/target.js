@@ -15,6 +15,7 @@ module.exports = {
         } else if (reply === null) {
           cb(null, null)
         } else {
+          logger.info('got proxy:'+host+' => '+target)
           cache[fqdn] = reply;
           cb(null, reply)
         }

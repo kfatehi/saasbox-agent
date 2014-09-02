@@ -15,10 +15,11 @@
   "private": true,
   "dependencies": {
     "body-parser": "^1.6.7",
+    "chai": "^1.9.1",
     "express": "^4.8.7",
-    "hiredis": "^0.1.17",
     "http-proxy": "^1.3.0",
-    "redis": "^0.12.1",
+    "mocha": "^1.21.4",
+    "supertest": "^0.13.0",
     "winston": "^0.7.3",
     "ydm-api": "^1.1.5"
   }
