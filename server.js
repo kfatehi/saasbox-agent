@@ -5,8 +5,7 @@ var logger = require('winston')
   , proxyPort = process.env.PORT || 4000
   , apiPort = proxyPort+1
 
-
-app.proxy.listen(proxyPort, addr)
+app.proxy.http.listen(proxyPort, addr)
 logger.info("proxy listening on http://"+addr+":"+proxyPort);
 
 app.api.http.listen(apiPort, addr)
