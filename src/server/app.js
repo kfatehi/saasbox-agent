@@ -14,7 +14,7 @@ if (process.env.SSL_KEY && process.env.SSL_CERT) {
   https = require('https').createServer({
     key: read(process.env.SSL_KEY),
     cert: read(process.env.SSL_CERT)
-  }, app.proxy.app)
+  }, proxyServer)
 }
 
 module.exports = {
