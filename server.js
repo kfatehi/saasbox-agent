@@ -1,12 +1,37 @@
 #!/usr/bin/env node
 var logger = require('winston')
   , app = require(__dirname+'/src/server/app.js')
+  , target = require('./src/target')
   , addr = '0.0.0.0'
-  , proxyPort = process.env.PORT || 4000
-  , apiPort = proxyPort+1
 
-app.proxy.http.listen(proxyPort, addr)
-logger.info("proxy listening on http://"+addr+":"+proxyPort);
+ports = {
+  api: {
+    http: process.env.CONTROL_PORT || 4000
+  },
+  proxy: {
+    http: process.env.PROXY_HTTP_PORT || 4080,
+    https: process.env.PROXY_HTTPS_PORT || 4443
+  }
+}
 
-app.api.http.listen(apiPort, addr)
-logger.info("api listening on http://"+addr+":"+apiPort);
+if (process.env.CONTROL_FQDN) {
+  target.set(process.env.CONTROL_FQDN, "http://"+addr+":"+ports.api.http)
+}
+
+app.api.http.listen(ports.api.http, addr)
+logger.info("api listening on http://"+addr+":"+ports.api.http);
+
+logger.warn("need to add api to proxy")
+
+app.proxy.http.listen(ports.proxy.http, addr)
+logger.info("proxy listening on http://"+addr+":"+ports.proxy.http);
+
+if (process.env.SSL_KEY && process.env.SSL_CERT) {
+  var read = require('fs').readFileSync;
+  require('https').createServer({
+    key: read(process.env.SSL_KEY),
+    cert: read(process.env.SSL_CERT)
+  }, app.proxy.app)
+} else {
+  logger.warn('no SSL')
+}
