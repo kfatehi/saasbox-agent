@@ -16,6 +16,6 @@ module.exports = {
   },
   proxy: {
     app: proxyServer,
-    http: require('http').createServer(proxyServer) 
+    http: require('http').createServer(proxyServer),
   }
 }
