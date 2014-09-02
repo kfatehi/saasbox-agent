@@ -15,13 +15,16 @@ ports = {
 }
 
 if (process.env.CONTROL_FQDN) {
-  target.set(process.env.CONTROL_FQDN, "http://"+addr+":"+ports.api.http)
+  target.set(process.env.CONTROL_FQDN, "http://"+addr+":"+ports.api.http, function(err) {
+    logger.info('control api proxied to '+process.env.CONTROL_FQDN)
+  })
+} else {
+  logger.warn("pass CONTROL_FQDN to proxy the control api")
 }
 
 app.api.http.listen(ports.api.http, addr)
-logger.info("api listening on http://"+addr+":"+ports.api.http);
+logger.info("control api listening on http://"+addr+":"+ports.api.http);
 
-logger.warn("need to add api to proxy")
 
 app.proxy.http.listen(ports.proxy.http, addr)
 logger.info("proxy listening on http://"+addr+":"+ports.proxy.http);
