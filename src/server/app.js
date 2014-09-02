@@ -1,7 +1,6 @@
 var logger = require('winston')
   , api = require('ydm-api')
   , httpProxy = require('http-proxy')
-  , proxy = httpProxy.createProxyServer({})
   , proxyServer = require('./proxy_server')
 
 logger.remove(logger.transports.Console);

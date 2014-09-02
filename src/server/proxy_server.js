@@ -1,5 +1,7 @@
 var logger = require('winston')
   , target = require('../target')
+  , httpProxy = require('http-proxy')
+  , proxy = httpProxy.createProxyServer({})
 
 module.exports = function (req, res) {
   var fqdn = req.headers.host.split(':')[0]
