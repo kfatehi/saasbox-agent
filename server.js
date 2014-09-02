@@ -35,6 +35,7 @@ if (process.env.SSL_KEY && process.env.SSL_CERT) {
     key: read(process.env.SSL_KEY),
     cert: read(process.env.SSL_CERT)
   }, app.proxy.app)
+  logger.info('HTTPS server enabled')
 } else {
   logger.warn('no SSL')
 }
