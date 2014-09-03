@@ -16,8 +16,8 @@ module.exports = function (req, res) {
       res.write('Not found\n');
       res.end();
     } else {
-      logger.info('Proxying '+fqdn+' => '+target);
       proxy.web(req, res, { target: target, ws: true });
+      logger.info('Proxied '+fqdn+' => '+target);
     }
   })
 }

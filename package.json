@@ -5,7 +5,9 @@
   "main": "src/server/app.js",
   "scripts": {
     "test": "mocha --recursive test",
-    "tdd": "watchy -w . -i '/\\.|node_modules|\\.json|coverage$' -- mocha -R min --recursive test 2>&1 | simple-stacktrace"
+    "tdd": "watchy -w . -i '/\\.|node_modules|\\.json|coverage$' -- mocha -R min --recursive test 2>&1 | simple-stacktrace",
+    "autocover": "watchy -w . -i '/\\.|node_modules|\\.json|coverage$' -- istanbul cover _mocha -- --recursive test",
+    "cover": "istanbul cover _mocha -- --recursive test"
   },
   "repository": {
     "type": "git",
@@ -18,9 +20,11 @@
     "body-parser": "^1.6.7",
     "express": "^4.8.7",
     "http-proxy": "^1.3.0",
+    "lodash": "^2.4.1",
+    "mkdirp": "^0.5.0",
     "node-localstorage": "^0.3.4",
     "winston": "^0.7.3",
-    "ydm-api": "^1.1.6"
+    "ydm": "^1.0.7"
   },
   "devDependencies": {
     "chai": "^1.9.1",

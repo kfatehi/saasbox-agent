@@ -1,10 +1,11 @@
 var target = require('../../target')
-  , ydmApi = require('ydm-api')
   , bodyParser = require('body-parser')
+  , authorize = require('../middleware/authorize')
 
 module.exports = function (r) { r.route('/proxies/:fqdn')
   /* env var YDM_API_SECRET must match header X-Auth-Token */
-  .all(ydmApi.middleware.authorize)
+  .all(authorize)
+
 
   /* POST /proxies/:fqdn
    * Set a proxy target by fqdn key

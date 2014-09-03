@@ -1,5 +1,5 @@
 var logger = require('winston')
-  , storage = require('./storage')
+  , storage = require('./storage').localStorage
   , cache = {}
 
 module.exports = {

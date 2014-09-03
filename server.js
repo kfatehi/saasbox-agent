@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 var logger = require('winston')
-  , app = require(__dirname+'/src/server/app.js')
+
+logger.remove(logger.transports.Console);
+logger.add(logger.transports.Console, { colorize: true });
+
+var app = require(__dirname+'/src/server/app.js')
   , target = require('./src/target')
   , addr = '0.0.0.0'
 
@@ -33,5 +37,5 @@ if (app.proxy.https) {
   app.proxy.https.listen(ports.proxy.https, addr)
   logger.info("proxy listening on http://"+addr+":"+ports.proxy.https);
 } else {
-  logger.warn('no SSL')
+  logger.warn('not proxying SSL connections. Pass in SSL_KEY and SSL_CERT to do so')
 }
