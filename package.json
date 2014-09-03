@@ -24,7 +24,7 @@
     "mkdirp": "^0.5.0",
     "node-localstorage": "^0.3.4",
     "winston": "^0.7.3",
-    "ydm": "^1.0.7"
+    "ydm": "^1.0.8"
   },
   "devDependencies": {
     "chai": "^1.9.1",
