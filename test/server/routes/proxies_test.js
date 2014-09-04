@@ -9,6 +9,10 @@ beforeEach(function() {
 });
 
 describe("POST /api/v1/proxies/:fqdn", function () {
+  it("rejects unauthorized", function(done) {
+    request(app).post('/api/v1/proxies/bottom.middle.top').expect(401).end(done)
+  });
+
   it("creates the proxy target and returns 201 created", function(done) {
     request(app)
     .post('/api/v1/proxies/bottom.middle.top')

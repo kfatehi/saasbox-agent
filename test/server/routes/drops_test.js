@@ -17,6 +17,10 @@ describe("POST /api/v1/drops/:name", function () {
     }.toString()
   });
 
+  it("rejects unauthorized", function(done) {
+    request(app).post('/api/v1/drops/foo').expect(401).end(done)
+  });
+
   it("creates drop and returns 201 created", function(done) {
     request(app)
     .post('/api/v1/drops/foo')
@@ -33,6 +37,10 @@ describe("POST /api/v1/drops/:name", function () {
 })
 
 describe("POST /api/v1/drops/:name/:action", function () {
+  it("rejects unauthorized", function(done) {
+    request(app).post('/api/v1/drops/foo/install').expect(401).end(done)
+  });
+
   it("performs the action and returns the output", function(done) {
     request(app)
     .post('/api/v1/drops/foo/install')
