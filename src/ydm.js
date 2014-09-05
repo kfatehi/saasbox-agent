@@ -9,7 +9,17 @@ var path = require('path')
 logger.info('ydm drops path: '+dropsPath)
 logger.info('ydm scopes path: '+scopesPath)
 
-module.exports = new Ydm({
+var ydm = new Ydm({
   scopesPath: scopesPath,
   dropsPath: dropsPath
 });
+
+var connector = ydm.dockerConnect;
+connector.connect().docker.listContainers(function(err, res) {
+  if (err) {
+    logger.error("Docker connection failure", connector.options);
+    throw err;
+  }
+})
+
+module.exports = ydm
