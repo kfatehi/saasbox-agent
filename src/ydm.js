@@ -19,6 +19,8 @@ connector.connect().docker.listContainers(function(err, res) {
   if (err) {
     logger.error("Docker connection failure", connector.options);
     throw err;
+  } else {
+    logger.info("Connected to Docker.")
   }
 })
 
