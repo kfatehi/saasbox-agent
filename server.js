@@ -29,7 +29,6 @@ if (process.env.CONTROL_FQDN) {
 app.api.http.listen(ports.api.http, addr)
 logger.info("control api listening on http://"+addr+":"+ports.api.http);
 
-
 app.proxy.http.listen(ports.proxy.http, addr)
 logger.info("proxy listening on http://"+addr+":"+ports.proxy.http);
 
