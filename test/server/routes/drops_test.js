@@ -45,9 +45,8 @@ describe("POST /api/v1/drops/:name/:action", function () {
     request(app)
     .post('/api/v1/drops/foo/install')
     .set('X-Auth-Token', secret)
-    .send({
-      namespace: 'myuser'
-    })
+    .send({ namespace: 'myuser' })
+    .expect('Content-Type', /json/)
     .expect(200)
     .end(function(err, res) {
       if (err) throw err;
