@@ -18,7 +18,15 @@ module.exports = function(req, res, next) {
         if (_.isObject(out)) {
           res.json(out);
         } else {
-          res.end(out);
+          var json = null;
+          try {
+            json = JSON.parse(out)
+          } catch (e) {
+            /* handle error */
+          } finally {
+            if (json) res.json(json);
+            else res.end(out);
+          }
         }
       } else {
         res.status(500).end();
