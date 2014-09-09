@@ -1,7 +1,6 @@
 var logger = require('winston')
   , express = require('express')
   , api = { app: express() }
-  , httpProxy = require('http-proxy')
   , proxyServer = require('./proxy_server')
 
 if (process.env.NODE_ENV === "development") {
@@ -29,19 +28,5 @@ module.exports = {
     app: api.app,
     http: require('http').createServer(api.app)
   },
-  proxy: {
-    app: proxyServer,
-    http: require('http').createServer(proxyServer),
-    https: (function() {
-      var https = null;
-      if (process.env.SSL_KEY && process.env.SSL_CERT) {
-        var read = require('fs').readFileSync;
-        https = require('https').createServer({
-          key: read(process.env.SSL_KEY),
-          cert: read(process.env.SSL_CERT)
-        }, proxyServer)
-      }
-      return https
-    }())
-  }
+  proxy: { http: proxyServer }
 }

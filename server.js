@@ -29,7 +29,7 @@ if (process.env.CONTROL_FQDN) {
     })
   }
 } else {
-  logger.warn("pass CONTROL_FQDN to proxy the control api")
+  logger.warn("set CONTROL_FQDN to proxy the control api")
 }
 
 app.api.http.listen(ports.api.http, addr)
@@ -37,10 +37,3 @@ logger.info("control api listening on http://"+addr+":"+ports.api.http);
 
 app.proxy.http.listen(ports.proxy.http, addr)
 logger.info("proxy listening on http://"+addr+":"+ports.proxy.http);
-
-if (app.proxy.https) {
-  app.proxy.https.listen(ports.proxy.https, addr)
-  logger.info("proxy listening on http://"+addr+":"+ports.proxy.https);
-} else {
-  logger.warn('not proxying SSL connections. Pass in SSL_KEY and SSL_CERT to do so')
-}
