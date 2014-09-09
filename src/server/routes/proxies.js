@@ -12,7 +12,7 @@ module.exports = function (r) { r.route('/proxies/:fqdn')
    * Expected JSON e.g.{ target: 'http://localhost:1234' } */
   .post(bodyParser.json(), function (req, res) {
     target.set(req.params.fqdn, req.body.target, function (err) {
-      if (err) res.status(500).end();
+      if (err) res.status(400).end();
       else res.status(201).end();
     })
   })
