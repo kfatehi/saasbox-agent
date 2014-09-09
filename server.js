@@ -22,6 +22,12 @@ if (process.env.CONTROL_FQDN) {
   target.set(process.env.CONTROL_FQDN, "http://"+addr+":"+ports.api.http, function(err) {
     logger.info('control api proxied to '+process.env.CONTROL_FQDN)
   })
+
+  if (process.env.CONTROL_FQDN_ALT) {
+    target.set(process.env.CONTROL_FQDN_ALT, "http://"+addr+":"+ports.api.http, function(err) {
+      logger.info('control api proxied to '+process.env.CONTROL_FQDN_ALT)
+    })
+  }
 } else {
   logger.warn("pass CONTROL_FQDN to proxy the control api")
 }
