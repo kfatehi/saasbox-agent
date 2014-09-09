@@ -10,11 +10,7 @@ var app = require(__dirname+'/src/server/app.js')
 
 ports = {
   api: {
-    http: process.env.CONTROL_PORT || 4000
-  },
-  proxy: {
-    http: process.env.PROXY_HTTP_PORT || 4080,
-    https: process.env.PROXY_HTTPS_PORT || 4443
+    http: process.env.PORT || 4000
   }
 }
 
@@ -28,9 +24,6 @@ if (process.env.CONTROL_FQDN) {
 
 app.api.http.listen(ports.api.http, addr)
 logger.info("control api listening on http://"+addr+":"+ports.api.http);
-
-app.proxy.http.listen(ports.proxy.http, addr)
-logger.info("proxy listening on http://"+addr+":"+ports.proxy.http);
 
 if (app.proxy.https) {
   app.proxy.https.listen(ports.proxy.https, addr)
