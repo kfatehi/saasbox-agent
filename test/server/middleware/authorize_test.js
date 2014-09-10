@@ -2,47 +2,49 @@ var expect = require('chai').expect
   , mw = require('../../../src/server/middleware/authorize')
   , secret = require('../../../src/secret')
 
-it("rejects incorrect token", function(done) {
-  var req = {
-    get: function(header) {
-      return headers[header]
+describe("middleware: authorize", function() {
+  it("rejects incorrect token", function(done) {
+    var req = {
+      get: function(header) {
+        return headers[header]
+      }
     }
-  }
-  var headers = {
-    'X-Auth-Token': 'wrong!!'
-  }
-  var res = {
-    status: function(code) {
-      expect(code).to.eq(401)
-      return { end: done }
+    var headers = {
+      'X-Auth-Token': 'wrong!!'
     }
-  }
-  mw(req, res);
-});
+    var res = {
+      status: function(code) {
+        expect(code).to.eq(401)
+        return { end: done }
+      }
+    }
+    mw(req, res);
+  });
 
-it("rejects missing token", function(done) {
-  var req = {
-    get: function(header) {
-      return undefined
+  it("rejects missing token", function(done) {
+    var req = {
+      get: function(header) {
+        return undefined
+      }
     }
-  }
-  var res = {
-    status: function(code) {
-      expect(code).to.eq(401)
-      return { end: done }
+    var res = {
+      status: function(code) {
+        expect(code).to.eq(401)
+        return { end: done }
+      }
     }
-  }
-  mw(req, res);
-});
+    mw(req, res);
+  });
 
-it("accepts correct token", function(done) {
-  var req = {
-    get: function(header) {
-      return headers[header]
+  it("accepts correct token", function(done) {
+    var req = {
+      get: function(header) {
+        return headers[header]
+      }
     }
-  }
-  var headers = {
-    'X-Auth-Token': secret
-  }
-  mw(req, null, done);
+    var headers = {
+      'X-Auth-Token': secret
+    }
+    mw(req, null, done);
+  });
 });
