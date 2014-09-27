@@ -23,6 +23,12 @@ var allowCrossDomain = function(req, res, next) {
 
 api.app.use('/api/v1/', allowCrossDomain, require('./routes'));
 
+api.app.use(function (err, req, res, next) {
+  logger.error(err.message)
+  logger.error(err.stack);
+  next(err);
+})
+
 module.exports = {
   api: {
     app: api.app,

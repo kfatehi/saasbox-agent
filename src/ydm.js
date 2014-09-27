@@ -1,7 +1,7 @@
 var path = require('path')
   , storage = require('./storage')
   , path = require('path')
-  , dropsPath = path.join(storage.root, 'ydm', 'drops')
+  , dropsPath = path.join(__dirname, '..', 'drops')
   , scopesPath = path.join(storage.root, 'ydm', 'scopes')
   , Ydm = require('ydm')
   , logger = require('winston')

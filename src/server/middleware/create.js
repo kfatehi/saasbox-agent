@@ -4,6 +4,7 @@ var ydm = require('../../ydm')
   , logger = require('winston')
 
 module.exports = function(req, res, next) {
+  logger.info('Receiving drop')
   var filePath = path.join(ydm.dropsPath, req.params.name+'.js')
   fs.writeFile(filePath, req.body, function(err) {
     if (err) {

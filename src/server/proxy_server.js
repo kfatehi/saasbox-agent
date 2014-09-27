@@ -4,6 +4,10 @@ var logger = require('winston')
   , proxy = httpProxy.createProxyServer({})
   , URI = require('uri-js')
 
+proxy.on('error', function(e) {
+  logger.error('Proxy error: '+e.message+'\n'+e.stack)
+});
+
 var handler = function (req, cb) {
   var fqdn = req.headers.host.split(':')[0]
   target.get(fqdn, function (err, target) {

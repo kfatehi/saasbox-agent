@@ -1,10 +1,12 @@
 var ydm = require('../../ydm')
   , path = require('path')
   , _ = require('lodash')
+  , logger = require('winston')
 
 module.exports = function(req, res, next) {
   var performer = ydm.performer(req.params.name, req.body)
   if (performer.canPerform(req.params.action)) {
+    logger.info('performing '+req.params.action)
     performer.perform(req.params.action, function(err, out) {
       if (err) {
         res.status(500)
@@ -14,6 +16,11 @@ module.exports = function(req, res, next) {
           res.end(err.message)
         }
       } if (out) {
+        if (out.pullStream) {
+          res.set('x-pullstream', 'yes')
+          console.log('piping pullstream response')
+          return out.pullStream.pipe(res)
+        }
         res.status(200)
         if (_.isObject(out)) {
           res.json(out);
@@ -22,7 +29,7 @@ module.exports = function(req, res, next) {
           try {
             json = JSON.parse(out)
           } catch (e) {
-            /* handle error */
+            json = { error: { message: e.message, stack: e.stack } }
           } finally {
             if (json) res.json(json);
             else res.end(out);
