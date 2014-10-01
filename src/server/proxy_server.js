@@ -32,16 +32,27 @@ var handler = function (req, cb) {
   })
 }
 
-module.exports = require('http').createServer(function(req, res) {
+var serverCallback = function(req, res) {
   handler(req, function(err, opts, fqdn) {
     if (err) return err(res);
     proxy.web(req, res, opts);
     logger.info('Proxied HTTP '+fqdn+' => '+opts.target);
   })
-}).on('upgrade', function(req, socket, head) {
-  handler(req, function(err, opts, fqdn) {
-    if (err) return false;
-    proxy.ws(req, socket, head, opts);
-    logger.info('Proxied WebSocket '+fqdn+' => '+opts.target);
+}
+
+module.exports = function(config) {
+  var server = null;
+  if (config && config.ssl) {
+    server = require('https').createServer(config.ssl, serverCallback)
+  } else {
+    server = require('http').createServer(serverCallback)
+  }
+  server.on('upgrade', function(req, socket, head) {
+    handler(req, function(err, opts, fqdn) {
+      if (err) return false;
+      proxy.ws(req, socket, head, opts);
+      logger.info('Proxied WebSocket '+fqdn+' => '+opts.target);
+    })
   })
-})
+  return server;
+}

@@ -1,7 +1,7 @@
 var logger = require('winston')
   , express = require('express')
   , api = { app: express() }
-  , proxyServer = require('./proxy_server')
+  , createProxyServer = require('./proxy_server')
 
 if (process.env.NODE_ENV === "development") {
   logger.info('development mode');
@@ -34,5 +34,5 @@ module.exports = {
     app: api.app,
     http: require('http').createServer(api.app)
   },
-  proxy: { http: proxyServer }
+  proxy: { createServer: createProxyServer }
 }
