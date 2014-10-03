@@ -6,7 +6,14 @@ module.exports = function(scope, argv) {
           Image: "quay.io/keyvanfatehi/strider:1.5.0",
           Env: {
             /* https://github.com/Strider-CD/strider#configuring */
-            SERVER_NAME: "https://"+argv.fqdn
+            SERVER_NAME: "https://"+argv.fqdn,
+            PLUGIN_GITHUB_APP_ID: argv.config.PLUGIN_GITHUB_APP_ID,
+            PLUGIN_GITHUB_SECRET: argv.config.PLUGIN_GITHUB_SECRET,
+            SMTP_HOST: argv.config.SMTP_HOST,
+            SMTP_USER: argv.config.SMTP_USER,
+            SMTP_PASS: argv.config.SMTP_PASS,
+            SMTP_FROM: argv.config.SMTP_FROM
+            //SMTP_FROM: 'Strider-CD <no-reply@'+argv.fqdn+'>'
           }
         },
         start: {
