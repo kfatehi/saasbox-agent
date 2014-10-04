@@ -36,7 +36,7 @@ var serverCallback = function(req, res) {
   handler(req, function(err, opts, fqdn) {
     if (err) return err(res);
     proxy.web(req, res, opts);
-    logger.info('Proxied HTTP '+fqdn+' => '+opts.target);
+    logger.info('Proxied HTTP '+fqdn+' => '+opts.target.scheme+'://'+opts.target.host+':'+opts.target.port);
   })
 }
 
@@ -51,7 +51,7 @@ module.exports = function(config) {
     handler(req, function(err, opts, fqdn) {
       if (err) return false;
       proxy.ws(req, socket, head, opts);
-      logger.info('Proxied WebSocket '+fqdn+' => '+opts.target);
+      logger.info('Proxied WebSocket '+fqdn+' => '+opts.target.scheme+'://'+opts.target.host+':'+opts.target.port);
     })
   })
   return server;
