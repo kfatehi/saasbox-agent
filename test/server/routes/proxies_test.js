@@ -33,30 +33,28 @@ describe("POST /api/v1/proxies/:fqdn", function () {
     })
   });
 
-  it("wont set a target that's already been set without removing it first", function(done) {
+  it("will set a target that's already been set", function(done) {
     request(app)
     .post('/api/v1/proxies/bottom.middle.top')
     .set('X-Auth-Token', secret)
     .send({ target: 'http://other.host:12345' })
-    .expect(400)
+    .expect(201)
     .end(function(err, res) {
       if (err) throw err;
       target.get('bottom.middle.top', function(err, reply) {
         expect(err).to.eq(null)
-        expect(reply).to.eq('http://localhost:12345')
-        target.unset('bottom.middle.top', function() {
-          request(app)
-          .post('/api/v1/proxies/bottom.middle.top')
-          .set('X-Auth-Token', secret)
-          .send({ target: 'http://other.host:12345' })
-          .expect(201)
-          .end(function(err, res) {
-            if (err) throw err;
-            target.get('bottom.middle.top', function(err, reply) {
-              expect(err).to.eq(null)
-              expect(reply).to.eq('http://other.host:12345')
-              done()
-            })
+        expect(reply).to.eq('http://other.host:12345')
+        request(app)
+        .post('/api/v1/proxies/bottom.middle.top')
+        .set('X-Auth-Token', secret)
+        .send({ target: 'http://another.host:12345' })
+        .expect(201)
+        .end(function(err, res) {
+          if (err) throw err;
+          target.get('bottom.middle.top', function(err, reply) {
+            expect(err).to.eq(null)
+            expect(reply).to.eq('http://another.host:12345')
+            done()
           })
         })
       })

@@ -17,13 +17,9 @@ module.exports = {
   /* Set a proxy target */
   set: function (fqdn, target, cb) {
     var reply = storage.getItem(fqdn);
-    if (reply) {
-      cb(new Error('already set'));
-    } else {
-      storage.setItem(fqdn, target)
-      cache[fqdn] = target;
-      cb(null, target);
-    }
+    storage.setItem(fqdn, target)
+    cache[fqdn] = target;
+    cb(null, target);
   },
 
   unset: function(fqdn, cb) {
