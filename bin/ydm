@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var argv = require('minimist')(process.argv.slice(2)) 
+var argv = require('../node_modules/ydm/node_modules/minimist')(process.argv.slice(2)) 
   , _ = require('lodash')
   , cli = require('../node_modules/ydm/lib/cli')
   , App = require('ydm')
