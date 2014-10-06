@@ -26,6 +26,7 @@ module.exports = function(req, res, next) {
           res.json(out);
         } else {
           var json = null;
+          if (out.trim() === 'ok') return res.end(out)
           try {
             json = JSON.parse(out)
           } catch (e) {
