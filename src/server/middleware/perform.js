@@ -29,7 +29,7 @@ module.exports = function(req, res, next) {
           try {
             json = JSON.parse(out)
           } catch (e) {
-            json = { error: { message: e.message, stack: e.stack } }
+            json = { error: { message: out, stack: new Error(out).stack } }
           } finally {
             if (json) res.json(json);
             else res.end(out);
