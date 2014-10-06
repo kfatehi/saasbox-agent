@@ -14,15 +14,16 @@ module.exports = function(scope, argv, ydm) {
       }, function (err, stream) {
         if (err) return done(err);
         if (stream) return done(null, stream, stream);
-        scope.tailUntilMatch(/waiting for connections on port 27017/, function () {
-          scope.inspectContainer(function (err, data) {
-            var ip = data.NetworkSettings.IPAddress;
+        scope.inspectContainer(function (err, data) {
+          if (err) return done(err);
+          var ip = data.NetworkSettings.IPAddress;
+          scope.tailUntilMatch(/waiting for connections on port 27017/, function () {
             done(null, {
               ip_address: ip,
               ports: data.NetworkSettings.Ports
             })
-          })
-        });
+          });
+        })
       });
     }
   }
