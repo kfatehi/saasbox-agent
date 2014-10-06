@@ -11,8 +11,9 @@ module.exports = function(scope, argv, ydm) {
             data: '/data/db'
           })
         }
-      }, function (err) {
-        if (err) throw new Error(err);
+      }, function (err, stream) {
+        if (err) return done(err);
+        if (stream) return done(null, stream, stream);
         scope.tailUntilMatch(/waiting for connections on port 27017/, function () {
           scope.inspectContainer(function (err, data) {
             var ip = data.NetworkSettings.IPAddress;
