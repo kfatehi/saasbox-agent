@@ -10,7 +10,8 @@
     "cover": "istanbul cover _mocha -- --recursive test"
   },
   "bin": {
-    "ydm": "bin/ydm"
+    "ydm": "bin/ydm",
+    "nsenter": "bin/nsenter"
   },
   "repository": {
     "type": "git",

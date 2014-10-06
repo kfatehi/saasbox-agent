@@ -45,3 +45,11 @@ Finally, we want flexibility -- a `ydm` drop is not a static blueprint but a liv
 Destroy (and reinstall, which depends on destroy) are soft and do no harm unless you activate one or more destructive switches:
 
 `--hard` delete any volumes, links, and data associated with the container
+
+---
+
+# nsenter
+
+Sometimes you need to work in a container, e.g. investigating an issue, debugging, etc
+
+Simply `bin/enter $name` where `$name` is like the Docker container name
