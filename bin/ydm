@@ -2,14 +2,10 @@
 var argv = require('../node_modules/ydm/node_modules/minimist')(process.argv.slice(2)) 
   , _ = require('lodash')
   , cli = require('../node_modules/ydm/lib/cli')
-  , App = require('ydm')
+  , app = require('../src/ydm')
   , path = require('path')
   , pkg = require('../node_modules/ydm/package.json')
   , dockerConnect = require('../node_modules/ydm/lib/docker_connect')
-
-var app = new App({
-  dropsPath: path.join(__dirname, '..', 'drops'),
-});
 
 if (argv.version) {
   console.log("Ydm "+pkg.version)

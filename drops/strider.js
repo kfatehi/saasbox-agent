@@ -70,7 +70,6 @@ module.exports = function(scope, argv, ydm) {
 
   function getMongoURI(done) {
     var mongo_ip = scope.storage.getItem('mongo_ip');
-    console.log("!!!!", mongo_ip)
     if (mongo_ip) { 
       done(null, ipToMongoURI(mongo_ip))
     } else {
