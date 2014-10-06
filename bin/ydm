@@ -5,6 +5,7 @@ var argv = require('../node_modules/ydm/node_modules/minimist')(process.argv.sli
   , App = require('ydm')
   , path = require('path')
   , pkg = require('../node_modules/ydm/package.json')
+  , dockerConnect = require('../node_modules/ydm/lib/docker_connect')
 
 var app = new App({
   dropsPath: path.join(__dirname, '..', 'drops'),
@@ -24,7 +25,7 @@ if (argv._[0] === 'list-drops') {
   console.log("Listing drops");
   listDrops()
 } else if (argv._[0] === "list-containers") {
-  var conn = require('../lib/docker_connect').connect()
+  var conn = dockerConnect.connect()
   conn.docker.listContainers(function (err, res) {
     if ( err ) throw err;
     console.log(res);
