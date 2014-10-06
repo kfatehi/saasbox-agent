@@ -1,6 +1,8 @@
-var _ = require('lodash')
-
 module.exports = function(scope, argv) {
+  var _ = require('lodash')
+    , Mongo = ydm.drops['mongo'](argv, ydm)
+    , mongo = new Mongo()
+
   return {
     install: function (done) {
       scope.applyConfig({
