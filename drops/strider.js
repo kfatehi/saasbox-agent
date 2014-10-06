@@ -18,7 +18,6 @@ module.exports = function(scope, argv, ydm) {
             Env: _.assign({
               /* https://github.com/Strider-CD/strider#configuring */
               GENERATE_ADMIN_USER: !!credentials,
-              NODE_ENV: 'production',
               FQDN: argv.fqdn || 'example.org',
               SERVER_NAME: "https://"+argv.fqdn,
               DB_URI: 'mongodb://'+mongoInfo.ip_address+':27017/strider-foss',
