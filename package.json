@@ -11,7 +11,7 @@
   },
   "bin": {
     "ydm": "bin/ydm",
-    "nsenter": "bin/nsenter"
+    "enter": "bin/enter"
   },
   "repository": {
     "type": "git",
