@@ -7,3 +7,41 @@ by default the proxy server listens on port 4000 and the control api listens on 
 Make sure to set YDM_API_SECRET in the environment.
 
 In addition, we store the key/value pairs on disk. Pass in STORAGE_PATH env var.
+
+---
+
+# ydm
+
+`ydm` is a command line tool to help manage and automate the complexity encountered in sophisticated uses of Docker.
+
+## Requirements
+
+`ydm` works on any machine that has Docker v1.1.1 or newer installed locally. See [ydm-api](https://github.com/keyvanfatehi/ydm-api) to use it remotely.
+
+## Install
+
+Use npm to install:
+
+`npm install -g ydm`
+
+## Adding Software
+
+You can create "drops" by looking at the current examples in the `drops/` directory. All you need to get started is a Docker image. For a simple example, look at the `mongo` drop.
+
+If you need to store additional files, create a directory (e.g. `drops/gitlab/index.js`) -- but if it's something simple, you can just create a single file (e.g. `drops/mongo.js`).
+
+## Testing Drops
+
+You can add tests for your drop -- take a look at `test/drops/postgresql/test.js` for a simple example.
+
+The `ydm` drop provides simple namespaces and persistence (via JSON files on disk exposed as HTML5 localStorage api). In it you can describe the nature of container interconnection, exposure to the outside world, and whatever else may be necessary -- it's just JavaScript.
+
+Finally, we want flexibility -- a `ydm` drop is not a static blueprint but a living, changing one -- it has been designed by me to facilitate this.
+
+# Docs
+
+## Destroy (and Reinstall)
+
+Destroy (and reinstall, which depends on destroy) are soft and do no harm unless you activate one or more destructive switches:
+
+`--hard` delete any volumes, links, and data associated with the container

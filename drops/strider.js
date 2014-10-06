@@ -1,47 +1,52 @@
-module.exports = function(scope, argv) {
+module.exports = function(scope, argv, ydm) {
   var _ = require('lodash')
     , Mongo = ydm.drops['mongo'](argv, ydm)
     , mongo = new Mongo()
 
   return {
+    requireAlways: {
+      '--namespace': "uses links, therefore a namespace is required",
+    },
     install: function (done) {
-      scope.applyConfig({
-        create: {
-          Image: "quay.io/keyvanfatehi/strider:1.5.0",
-          Env: _.assign({
-            /* https://github.com/Strider-CD/strider#configuring */
-            SERVER_NAME: "https://"+argv.fqdn
-            //SMTP_FROM: 'Strider-CD <no-reply@'+argv.fqdn+'>'
-          }, argv.config || {})
-        },
-        start: {
-          Binds: scope.managedVolumes({
-            home: '/home/strider'
-          }),
-        }
-      }, function (err, wait, data) {
-        if (err) throw err;
-        if (wait) return done(null, wait);
-        scope.inspectContainer(function (err, data) {
-          var ip = data.NetworkSettings.IPAddress;
-          done(err, {
-            running: data.State.Running,
-            ip_address: ip,
-            ports: data.NetworkSettings.Ports,
-            app: {
-              url: "http://"+ip+":3000",
-              email: "test@example.com",
-              password: "dontlook"
-            },
-            ssh: {
-              port: 22,
-              username: "strider",
-              password: "str!der",
-              notes: "Root access is prohibited by default through ssh. To get root access login as strider and su to root."
+      mongo.install(function (err, mongoInfo) {
+        scope.applyConfig({
+          create: {
+            Image: "quay.io/keyvanfatehi/strider:1.5.0",
+            Env: _.assign({
+              /* https://github.com/Strider-CD/strider#configuring */
+              SERVER_NAME: "https://"+argv.fqdn,
+              DB_URI: 'mongodb://'+mongoInfo.ip_address+':27017/strider-foss',
+              //SMTP_FROM: 'Strider-CD <no-reply@'+argv.fqdn+'>'
+            }, argv.config || {})
+          },
+          start: {
+            Binds: scope.managedVolumes({
+              home: '/home/strider'
+            }),
+            Link: scope.managedLinks({
+              mongo: mongo
+            })
+          }
+        }, function (err, wait) {
+          if (err) return done(err);
+          if (wait) return done(null, wait);
+          scope.inspectContainer(function (err, data) {
+            if (err) return done(err);
+            var ip = data.NetworkSettings.IPAddress;
+            var info = {
+              running: data.State.Running,
+              ip_address: ip,
+              ports: data.NetworkSettings.Ports,
+              app: {
+                url: "http://"+ip+":3000",
+                email: "test@example.com",
+                password: "dontlook"
+              }
             }
+            // we need to create a user now
           });
         });
-      });
+      })
     }
   }
 }
