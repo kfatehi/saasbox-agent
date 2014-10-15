@@ -9,20 +9,21 @@ module.exports = function(scope, argv, ydm) {
     },
     install: function (done) {
       var credentials = scope.storage.getItem('credentials')
-      if (credentials) credentials = JSON.parse(credentials);
-      mongo.install(function (err, mongoInfo, stream) {
+      if (credentials) {
+        credentials = JSON.parse(credentials);
+      } else {
+        argv.config.GENERATE_ADMIN_USER = true
+      }
+      getMongoURI(function(err, mongo_uri, stream) {
+        if (err) return done(err);
         if (stream) return done(null, stream);
         scope.applyConfig({
           create: {
-            Image: "quay.io/keyvanfatehi/strider:1.5.0",
+            Image: "quay.io/keyvanfatehi/strider:1.6.0",
             Env: _.assign({
-              /* https://github.com/Strider-CD/strider#configuring */
-              GENERATE_ADMIN_USER: !!credentials,
-              NODE_ENV: 'production',
               FQDN: argv.fqdn || 'example.org',
               SERVER_NAME: "https://"+argv.fqdn,
-              DB_URI: 'mongodb://'+mongoInfo.ip_address+':27017/strider-foss',
-              //SMTP_FROM: 'Strider-CD <no-reply@'+argv.fqdn+'>'
+              DB_URI: mongo_uri,
             }, argv.config || {})
           },
           start: {
@@ -68,4 +69,16 @@ module.exports = function(scope, argv, ydm) {
       })
     }
   }
+
+  function getMongoURI(done) {
+    mongo.install(function (err, info, stream) {
+      if (err) return done(err);
+      if (stream) return done(null, null, stream);
+      done(null, ipToMongoURI(info.ip_address))
+    })
+  }
+}
+
+function ipToMongoURI(ip) {
+  return 'mongodb://'+ip+':27017/strider-foss';
 }

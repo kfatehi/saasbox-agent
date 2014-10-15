@@ -3,7 +3,8 @@ var logger = require('winston')
 var storage_path = process.env.STORAGE_PATH
 if (!storage_path) {
   storage_path = path.join(__dirname, '..', 'data')
-  logger.warn('no STORAGE_PATH set, defaulted to '+storage_path); 
+  logger.error('no STORAGE_PATH set')
+  process.exit(1)
 }
 var LocalStorage = require('node-localstorage').LocalStorage;
 
