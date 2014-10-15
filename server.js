@@ -35,11 +35,12 @@ cluster(function() {
     app.proxy.createServer({
       ssl: {
         key: fs.readFileSync(process.env.SSL_KEY_PATH),
-        cert: fs.readFileSync(process.env.SSL_CERT_PATH)
+        cert: fs.readFileSync(process.env.SSL_CERT_PATH),
+        secureProtocol: 'TLSv1_method'
       }
     }).listen(ports.proxy.https)
     logger.info("proxy listening on https://0.0.0.0:"+ports.proxy.https);
   } else {
-    logger.warn('no ssl!')
+    logger.warn('no ssl -- set SSL_KEY_PATH and SSL_CERT_PATH!')
   }
 })
