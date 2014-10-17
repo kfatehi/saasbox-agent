@@ -19,7 +19,7 @@ module.exports = function(scope, argv, ydm) {
         if (stream) return done(null, stream);
         scope.applyConfig({
           create: {
-            Image: "quay.io/keyvanfatehi/strider:1.6.0",
+            Image: "quay.io/keyvanfatehi/strider:1.5.0",
             Env: _.assign({
               FQDN: argv.fqdn || 'example.org',
               SERVER_NAME: "https://"+argv.fqdn,
