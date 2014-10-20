@@ -1,3 +1,5 @@
+process.env.STORAGE_PATH = '/tmp'
+
 var expect = require('chai').expect
   , mw = require('../../../src/server/middleware/authorize')
   , secret = require('../../../src/secret')
