@@ -29,7 +29,7 @@
     "node-localstorage": "^0.3.4",
     "uri-js": "~1.4.2",
     "winston": "^0.7.3",
-    "ydm": "^1.1.0-pre"
+    "ydm": "^1.1.0"
   },
   "devDependencies": {
     "chai": "^1.9.1",
