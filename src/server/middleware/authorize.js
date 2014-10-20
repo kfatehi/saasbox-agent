@@ -1,4 +1,4 @@
-var logger = require('winston')
+var logger = require('../../logger')
 var secret = require('../../secret')
 
 module.exports = function(req, res, next) {

@@ -1,4 +1,4 @@
-var logger = require('winston')
+var logger = require('./logger')
   , storage = require('./storage').localStorage
   , cache = {}
 

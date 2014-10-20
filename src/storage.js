@@ -1,5 +1,5 @@
 var path = require('path')
-var logger = require('winston')
+var logger = require('./logger')
 var storage_path = process.env.STORAGE_PATH
 if (!storage_path) {
   storage_path = path.join(__dirname, '..', 'data')

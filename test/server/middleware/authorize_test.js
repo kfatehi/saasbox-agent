@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'test';
 process.env.STORAGE_PATH = '/tmp'
 
 var expect = require('chai').expect

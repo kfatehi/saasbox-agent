@@ -1,7 +1,7 @@
 var ydm = require('../../ydm')
   , path = require('path')
   , fs = require('fs')
-  , logger = require('winston')
+  , logger = require('../../logger')
 
 module.exports = function(req, res, next) {
   logger.info('Receiving drop')

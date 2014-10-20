@@ -1,5 +1,5 @@
 var secret = process.env.API_SECRET;
-var logger = require('winston');
+var logger = require('./logger')
 var storage = require('./storage').localStorage
 
 function generateSecret() {

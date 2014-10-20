@@ -1,4 +1,4 @@
-var logger = require('winston')
+var logger = require('../logger')
   , target = require('../target')
   , httpProxy = require('http-proxy')
   , proxy = httpProxy.createProxyServer({})

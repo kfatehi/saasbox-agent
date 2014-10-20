@@ -4,7 +4,7 @@ var path = require('path')
   , dropsPath = path.join(__dirname, '..', 'drops')
   , scopesPath = path.join(storage.root, 'ydm', 'scopes')
   , Ydm = require('ydm')
-  , logger = require('winston')
+  , logger = require('./logger')
 
 logger.info('ydm drops path: '+dropsPath)
 logger.info('ydm scopes path: '+scopesPath)

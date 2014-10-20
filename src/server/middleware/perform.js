@@ -1,7 +1,7 @@
 var ydm = require('../../ydm')
   , path = require('path')
   , _ = require('lodash')
-  , logger = require('winston')
+  , logger = require('../../logger')
 
 module.exports = function(req, res, next) {
   var performer = ydm.performer(req.params.name, req.body)
