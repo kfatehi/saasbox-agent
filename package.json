@@ -29,7 +29,6 @@
     "node-localstorage": "^0.3.4",
     "saasbox-common": "git+ssh://git@github.com:keyvanfatehi/saasbox-common",
     "uri-js": "~1.4.2",
-    "winston": "^0.7.3",
     "ydm": "^1.1.0"
   },
   "devDependencies": {
