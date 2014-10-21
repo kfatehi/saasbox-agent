@@ -1,6 +1,6 @@
 {
   "name": "saasbox-agent",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Extends the ydm api to include reverse proxying",
   "main": "src/server/app.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "lodash": "^2.4.1",
     "mkdirp": "^0.5.0",
     "node-localstorage": "^0.3.4",
-    "saasbox-common": "git+ssh://git@github.com:keyvanfatehi/saasbox-common#0.0.2",
+    "saasbox-common": "git+ssh://git@github.com:keyvanfatehi/saasbox-common#0.0.3",
     "uri-js": "~1.4.2",
     "ydm": "^1.1.0"
   },
