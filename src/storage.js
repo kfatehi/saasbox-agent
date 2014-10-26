@@ -2,8 +2,10 @@ var path = require('path')
 var logger = require('./logger')
 var storage_path = process.env.STORAGE_PATH
 if (!storage_path) {
-  storage_path = path.join(__dirname, '..', 'data')
-  throw new Error('no STORAGE_PATH set')
+  if (process.env.NODE_ENV === 'production')
+    throw new Error('no STORAGE_PATH set')
+  else
+    storage_path = path.join(__dirname, '..', 'tmp')
 }
 var LocalStorage = require('node-localstorage').LocalStorage;
 
