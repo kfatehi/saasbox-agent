@@ -1,1 +1,1 @@
-module.exports = require('saasbox-common').logger
+module.exports = require('./common').logger

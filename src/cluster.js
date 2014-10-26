@@ -1,1 +1,1 @@
-module.exports = require('saasbox-common').cluster;
+module.exports = require('./common').cluster
