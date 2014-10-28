@@ -1,11 +1,12 @@
 {
   "name": "saasbox-agent",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Extends the ydm api to include reverse proxying",
   "main": "src/server/app.js",
   "scripts": {
+    "start": "node agent.js",
     "test": "mocha --recursive test/unit",
-    "tdd": "watchy -w . -i '/\\.|node_modules|\\.json|data|coverage$' -- mocha -R min --recursive test/unit 2>&1 | simple-stacktrace",
+    "tdd": "watchy -w . -i '/\\.|\\.json|data|drops|coverage$' -- mocha -R min --recursive test/unit 2>&1 | simple-stacktrace",
     "autocover": "watchy -w . -i '/\\.|node_modules|\\.json|data|coverage$' -- istanbul cover _mocha -- --recursive test/unit",
     "cover": "istanbul cover _mocha -- --recursive test/unit"
   },
@@ -28,7 +29,7 @@
     "mkdirp": "^0.5.0",
     "node-localstorage": "^0.3.4",
     "simple-stats-server": "0.0.5",
-    "upstreamapp-common": "^1.0.1",
+    "upstreamapp-common": "^1.0.2",
     "uri-js": "~1.4.2",
     "ydm": "^1.1.0"
   },
