@@ -1,6 +1,6 @@
 {
   "name": "saasbox-agent",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {
     "body-parser": {
       "version": "1.9.1",
@@ -337,9 +337,8 @@
       }
     },
     "upstreamapp-common": {
-      "version": "1.0.0",
-      "from": "upstreamapp-common@>=1.0.0 <2.0.0",
-      "resolved": "http://box.upstreamapp.com:4873/upstreamapp-common/-/upstreamapp-common-1.0.0.tgz",
+      "version": "1.0.1",
+      "from": "upstreamapp-common@>=1.0.1 <2.0.0",
       "dependencies": {
         "js-yaml": {
           "version": "3.2.2",
