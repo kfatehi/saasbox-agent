@@ -5,8 +5,23 @@ var logger = require('./src/logger')
   , fs = require('fs')
   , prod = process.env.NODE_ENV === 'production'
   , cluster = require('./src/cluster')
+  , ydm = require('./src/ydm')
 
-cluster(function() {
+var dockerConnect = function(done) {
+  return function() {
+    var connector = ydm.dockerConnect;
+    connector.connect().docker.listContainers(function(err) {
+      if (err) {
+        throw new Error("Docker connection failure "+JSON.stringify(connector.options)+", "+err.stack);
+      } else {
+        logger.info("Connected to Docker.")
+      }
+      done(err)
+    })
+  }
+}
+
+cluster(dockerConnect(function() {
   var ports = {
     api: { http: 4999 },
     proxy: {
@@ -43,4 +58,4 @@ cluster(function() {
   } else {
     logger.warn('no ssl -- set SSL_KEY_PATH and SSL_CERT_PATH!')
   }
-})
+}))

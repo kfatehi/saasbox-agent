@@ -14,14 +14,4 @@ var ydm = new Ydm({
   dropsPath: dropsPath
 });
 
-var connector = ydm.dockerConnect;
-connector.connect().docker.listContainers(function(err, res) {
-  if (err) {
-    logger.error("Docker connection failure", connector.options);
-    throw err;
-  } else {
-    logger.info("Connected to Docker.")
-  }
-})
-
 module.exports = ydm
