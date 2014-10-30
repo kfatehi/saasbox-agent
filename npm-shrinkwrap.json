@@ -337,8 +337,8 @@
       }
     },
     "upstreamapp-common": {
-      "version": "1.0.2",
-      "from": "upstreamapp-common@>=1.0.2 <2.0.0",
+      "version": "1.0.3",
+      "from": "upstreamapp-common@>=1.0.3 <2.0.0",
       "dependencies": {
         "js-yaml": {
           "version": "3.2.2",

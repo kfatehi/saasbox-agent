@@ -29,7 +29,7 @@
     "mkdirp": "^0.5.0",
     "node-localstorage": "^0.3.4",
     "simple-stats-server": "0.0.5",
-    "upstreamapp-common": "^1.0.2",
+    "upstreamapp-common": "^1.0.3",
     "uri-js": "~1.4.2",
     "ydm": "^1.1.0"
   },
