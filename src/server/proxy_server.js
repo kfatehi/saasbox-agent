@@ -22,7 +22,10 @@ var notFound = function(res) {
 
 var handler = function (req, cb) {
   var host = req.headers.host
-  if (!host) return cb(notFound);
+  if (!host) {
+    logger.warn('No host header was provided. Returning 404')
+    return cb(notFound);
+  }
   var fqdn = req.headers.host.split(':')[0]
   target.get(fqdn, function (err, target) {
     if (err) {
@@ -32,33 +35,34 @@ var handler = function (req, cb) {
       var opts = { target: URI.parse(target) }
       cb(null, opts, fqdn)
     } else {
-      logger.warn('No target defined for '+fqdn);
+      logger.warn('No target defined for host '+fqdn+'. Returning 404');
       return cb(notFound)
     }
   })
 }
 
-var serverCallback = function(req, res) {
+var requestListener = function(req, res) {
   handler(req, function(err, opts, fqdn) {
     if (err) return err(res);
     proxy.web(req, res, opts);
-    logger.info('Proxied HTTP '+fqdn+' => '+opts.target.scheme+'://'+opts.target.host+':'+opts.target.port);
+    //logger.info('Proxied HTTP '+fqdn+' => '+opts.target.scheme+'://'+opts.target.host+':'+opts.target.port);
+  })
+}
+
+var websocketListener = function(req, socket, head) {
+  handler(req, function(err, opts, fqdn) {
+    if (err) return false;
+    proxy.ws(req, socket, head, opts);
+    //logger.info('Proxied WebSocket '+fqdn+' => '+opts.target.scheme+'://'+opts.target.host+':'+opts.target.port);
   })
 }
 
 module.exports = function(config) {
-  var server = null;
-  if (config && config.ssl) {
-    server = require('https').createServer(config.ssl, serverCallback)
-  } else {
-    server = require('http').createServer(serverCallback)
-  }
-  server.on('upgrade', function(req, socket, head) {
-    handler(req, function(err, opts, fqdn) {
-      if (err) return false;
-      proxy.ws(req, socket, head, opts);
-      logger.info('Proxied WebSocket '+fqdn+' => '+opts.target.scheme+'://'+opts.target.host+':'+opts.target.port);
-    })
-  })
+  var server = (
+    config && config.ssl ?
+    require('https').createServer(config.ssl, requestListener) :
+    require('http').createServer(requestListener)
+  )
+  server.on('upgrade', websocketListener)
   return server;
 }
