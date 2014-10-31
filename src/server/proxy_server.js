@@ -8,26 +8,32 @@ proxy.on('error', function(e) {
   logger.error('Proxy error: '+e.message+'\n'+e.stack)
 });
 
+var gatewayError = function(res) {
+  res.writeHead(502, { 'Content-Type': 'text/plain' });
+  res.write('Internal Gateway Error');
+  res.end()
+}
+
+var notFound = function(res) {
+  res.writeHead(404, { 'Content-Type': 'text/plain' });
+  res.write('Not found\n');
+  res.end();
+}
+
 var handler = function (req, cb) {
+  var host = req.headers.host
+  if (!host) return cb(notFound);
   var fqdn = req.headers.host.split(':')[0]
   target.get(fqdn, function (err, target) {
     if (err) {
       logger.error(err.message+err.backtrace);
-      return cb(function(res) {
-        res.writeHead(502, { 'Content-Type': 'text/plain' });
-        res.write('Internal Gateway Error');
-        res.end()
-      })
+      return cb(gatewayError)
     } else if (target) {
       var opts = { target: URI.parse(target) }
       cb(null, opts, fqdn)
     } else {
       logger.warn('No target defined for '+fqdn);
-      return cb(function(res) {
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.write('Not found\n');
-        res.end();
-      })
+      return cb(notFound)
     }
   })
 }
