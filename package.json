@@ -1,6 +1,6 @@
 {
   "name": "saasbox-agent",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Extends the ydm api to include reverse proxying",
   "main": "src/server/app.js",
   "scripts": {
